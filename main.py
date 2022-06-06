@@ -377,6 +377,8 @@ class MainWindow(QMainWindow):
                     tempa= tempa + self.forceZai[i] * (self.dist2[i] - self.dist1[i]) * (self.dist2[i] + self.dist1[i] - 2 * self.Yueshu1[0]) / 2
                 yforce2 = (-tempa) / (self.Yueshu2[0] - self.Yueshu1[0])
                 yforce1 = vsum - yforce2
+                print(yforce2)
+                print(yforce1)
                 vforce = self.vforce + [yforce2] + [yforce1]
 
             vx = np.linspace(0, self.length, 1001)
@@ -391,14 +393,14 @@ class MainWindow(QMainWindow):
             for i in range(0, len(self.forceZai)):
                 for j in range(0, len(vx)):
                     if self.dist1[i] <= vx[j] < self.dist2[i]:
-                        vy[j:] = vy[j:] + self.forceZai[i] * self.length / 100
+                        vy[j:] = vy[j:] + self.forceZai[i] * self.length / (len(vx) - 1)
             vx_1 = np.hstack((x1, vx, x2))
             vy = np.hstack((f1, vy, f1))
             self.ui.widget_jian.plot(vx_1, vy)
 
             vm = np.zeros(1001)
             for i in range(0, len(vx)):
-                vm[i:] = vm[i:] + vy[i] * self.length / 100
+                vm[i:] = vm[i:] + vy[i] * self.length / (len(vx) - 1)
             if len(self.Yueshu3) == 1:
                 tempa = 0
                 for i in range(0, len(self.vdist)):
