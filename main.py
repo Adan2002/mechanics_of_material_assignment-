@@ -230,70 +230,70 @@ class MainWindow(QMainWindow):
 
     def save_length(self):
         temp1 = self.ui.lineLength.text()
-        if not temp1.isdigit():
-            QMessageBox.information(None, '注意！', '请输入数字！')
-        else:
+        if temp1.isdigit():
             self.length = float(temp1)
             print(self.length)
+        else:
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def savevforce(self):
         temp1 = self.ui.lineLength_2.text()
         temp2 = self.ui.lineLength_3.text()
-        if temp1.isdigit() and temp2.isdigit():
+        if (temp1.isdigit() or (temp1[0] == '-' and temp1[1:].isdigit())) and temp2.isdigit():
             self.vforce.append(float(temp1))
             self.vdist.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def savehforce(self):
         temp1 = self.ui.lineLength_2.text()
         temp2 = self.ui.lineLength_3.text()
-        if temp1.isdigit() and temp2.isdigit():
+        if (temp1.isdigit() or (temp1[0] == '-' and temp1[1:].isdigit())) and temp2.isdigit():
             self.hforce.append(float(temp1))
             self.hdist.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def saveforceother(self):
         temp1 = self.ui.lineLength_2.text()
         temp2 = self.ui.lineLength_3.text()
-        if temp1.isdigit() and temp2.isdigit():
+        if (temp1.isdigit() or (temp1[0] == '-' and temp1[1:].isdigit())) and temp2.isdigit():
             self.forceother.append(float(temp1))
             self.odist.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def saveforcezai(self):
         temp1 = self.ui.lineLength_2.text()
         temp2 = self.ui.lineLength_3.text()
         temp3 = self.ui.lineLength_4.text()
-        if temp1.isdigit() and temp2.isdigit() and temp3.isdigit():
+        if (temp1.isdigit() or (temp1[0] == '-' and temp1[1:].isdigit())) and temp2.isdigit() and temp3.isdigit():
             self.forceZai.append(float(temp1))
             self.dist1.append(float(temp2))
             self.dist2.append(float(temp3))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def saveyueshu1(self):
         temp2 = self.ui.lineLength_3.text()
         if temp2.isdigit():
             self.Yueshu1.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def saveyueshu2(self):
         temp2 = self.ui.lineLength_3.text()
         if temp2.isdigit():
             self.Yueshu2.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def saveyueshu3(self):
         temp2 = self.ui.lineLength_3.text()
         if temp2.isdigit():
             self.Yueshu3.append(float(temp2))
         else:
-            QMessageBox.information(None, '注意！', '请输入数字！')
+            QMessageBox.information(None, '注意！', '请输入数字或距离输入正数！')
 
     def allclear(self):
         self.vforce.clear()
@@ -372,10 +372,10 @@ class MainWindow(QMainWindow):
             else:
                 tempa = 0
                 for i in range(0, len(self.vdist)):
-                    tempa = tempa + self.vforce[i] * (self.vdist[i] - self.Yueshu1[0])
+                    tempa = tempa + self.vforce[i] * (self.vdist[i] - vpos[-1])
                 for i in range(0, len(self.forceZai)):
-                    tempa= tempa + self.forceZai[i] * (self.dist2[i] - self.dist1[i]) * (self.dist2[i] + self.dist1[i] - 2 * self.Yueshu1[0]) / 2
-                yforce2 = (-tempa) / (self.Yueshu2[0] - self.Yueshu1[0])
+                    tempa= tempa + self.forceZai[i] * (self.dist2[i] - self.dist1[i]) * (self.dist2[i] + self.dist1[i] - 2 * vpos[-1]) / 2
+                yforce2 = (-tempa) / (vpos[-2] - vpos[-1])
                 yforce1 = vsum - yforce2
                 print(yforce2)
                 print(yforce1)
